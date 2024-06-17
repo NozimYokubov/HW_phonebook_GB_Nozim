@@ -10,19 +10,19 @@ def work_with_phonebook():
             last_name=input('lastname ')
             print(find_by_lastname(phone_book,last_name))
         elif choice==3:
-            last_name=input('lastname ')
-            new_number=input('new  number ')
-            print(change_number(phone_book,last_name,new_number))	    	
-        elif choice==4:
-            lastname=input('lastname ')
-            print(delete_by_lastname(phone_book,lastname))
-        elif choice==5:
             number=input('number ')
-            print(find_by_number(phone_book,number))
-        elif choice==6:
+            print(find_by_number(phone_book,number))    	
+        elif choice==4:
             user_data=input('new data ')
             add_user(phone_book,user_data)
-            write_txt('phonebook.txt',phone_book)
+        elif choice==5:
+            last_name=input('lastname ')
+            new_number=input('new  number ')
+            a = change_number(phone_book,last_name,new_number)
+            print(*a)
+        elif choice==6:
+            write_txt('phon.txt', phone_book)
+            print('done')
         choice=show_menu()
 
 
@@ -60,8 +60,35 @@ def read_txt(filename):
 
 
 def print_result(phone_book):
+    # for i in phone_book:
+    #     print(*i.values())   # надо доработать табуляцию
+    print('\n'.join(' '.join(map(str, i.values())) for i in filter(lambda x: 1, phone_book)))
+
+def find_by_lastname(phone_book,last_name):
+    # a = list(filter(lambda x: x['Фамилия'] == last_name, phone_book))
+    # for i in a:
+    #     print(*i.values())
+    a = ('\n'.join(' '.join(map(str, i.values())) for i in filter(lambda x: x['Фамилия'] == last_name, phone_book)))
+    return a
+
+def find_by_number(phone_book,number):
+    a = ('\n'.join(' '.join(map(str, i.values())) for i in filter(lambda x: x['Телефон'] == number, phone_book)))
+    return a
+
+def add_user(phone_book,user_data):
+    fields = ['Фамилия', 'Имя', 'Телефон', 'Описание']
+    record = dict(zip(fields, user_data.split(',')))
+	#dict(( (фамилия, Иванов), (имя, Точка), (номер, 8928) ))
+    phone_book.append(record)	
+    return phone_book
+
+def change_number(phone_book,last_name,new_number):
+    # print(list(filter(lambda x: x['Фамилия'] == last_name, phone_book)))
     for i in phone_book:
-        print(*i.values())   # надо доработать табуляцию
+        if i['Фамилия']==last_name:
+            i['Телефон'] = new_number
+            return i.values()
+
 
 
 def write_txt(filename , phone_book):
