@@ -1,3 +1,5 @@
+
+
 def work_with_phonebook():
     choice=show_menu()
     phone_book=read_txt('phon.txt')
@@ -38,23 +40,28 @@ def show_menu():
     return choice
 
 
-Иванов, Иван, 111, описание Иванова
-Петров, Петр, 222, описание Петрова
-Васичкина, Василиса, 333, описание Васичкиной
-Питонов, Антон, 777, умеет в Питон
+# Иванов, Иван, 111, описание Иванова
+# Петров, Петр, 222, описание Петрова
+# Васичкина, Василиса, 333, описание Васичкиной
+# Питонов, Антон, 777, умеет в Питон
 
 
 
 def read_txt(filename): 
     phone_book=[]
     fields = ['Фамилия', 'Имя', 'Телефон', 'Описание']
-    line.split(',') = ['Питонов', 'Антон', '777', 'умеет в Питон']
+    line = ['Питонов,Антон,777,умеет в Питон']
     with open(filename,'r',encoding='utf-8') as phb:
         for line in phb:
             record = dict(zip(fields, line.split(',')))
 			#dict(( (фамилия, Иванов), (имя, Точка), (номер, 8928) ))
             phone_book.append(record)	
     return phone_book
+
+
+def print_result(phone_book):
+    for i in phone_book:
+        print(*i.values())   # надо доработать табуляцию
 
 
 def write_txt(filename , phone_book):
