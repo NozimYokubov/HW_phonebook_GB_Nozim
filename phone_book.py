@@ -3,7 +3,7 @@
 def work_with_phonebook():
     choice=show_menu()
     phone_book=read_txt('phon.txt')
-    while (choice!=7):
+    while (choice!=8):
         if choice==1:
             print_result(phone_book)
         elif choice==2:
@@ -21,7 +21,11 @@ def work_with_phonebook():
             a = change_number(phone_book,last_name,new_number)
             print(*a)
         elif choice==6:
-            write_txt('phon.txt', phone_book)
+            write_txt('phonebook.txt', phone_book)
+            print('done')
+        elif choice==7:
+            string_number=int(input('string number '))
+            copy_chosen_data('phonebook.txt', phone_book, string_number)
             print('done')
         choice=show_menu()
 
@@ -35,7 +39,8 @@ def show_menu():
           "4. Добавить абонента в справочник\n"
           "5. Изменить данные\n"
           "6. Сохранить справочник в текстовом формате\n"
-          "7. Закончить работу")
+          "7. Копирование выбранного контакта\n"
+          "8. Закончить работу")
     choice = int(input())
     return choice
 
@@ -99,7 +104,13 @@ def write_txt(filename , phone_book):
                 s = s + v + ','
             phout.write(f'{s[:-1]}\n')
 
- 
+def copy_chosen_data(filename, phone_book, string_number):
+    # print(phone_book[string_number-1])
+    with open(filename,'a',encoding='utf-8') as phout:
+            s=''
+            for v in phone_book[string_number-1].values():
+                s = s + v + ','
+            phout.write(f'{s[:-1]}\n')
 
 work_with_phonebook()
 
